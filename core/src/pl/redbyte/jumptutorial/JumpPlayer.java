@@ -15,11 +15,11 @@ public class JumpPlayer extends Rectangle {
     public float jumpVelocity;
 
 
-    public JumpPlayer(Texture texture) {
+    public JumpPlayer(Texture texture, Sound jumpSound) {
         this.texture = texture;
         this.height = texture.getHeight();
         this.width = texture.getWidth();
-        jumpSound = Gdx.audio.newSound(Gdx.files.internal("jump.ogg"));
+        this.jumpSound = jumpSound;
     }
 
 

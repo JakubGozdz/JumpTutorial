@@ -3,6 +3,7 @@ package pl.redbyte.jumptutorial;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,7 +15,7 @@ import com.badlogic.gdx.Input.Keys;
 
 public class JumpTutorial extends ApplicationAdapter {
 
-
+	private Assets assets;
 	private Music music;
 	private Texture playerTexture, platformTexture;
 	private JumpPlayer player;
@@ -26,8 +27,21 @@ public class JumpTutorial extends ApplicationAdapter {
 
 	@Override
 	public void create () {
-		loadData();
-		init();
+		assets = new Assets();
+		assets.load();
+		assets.manager.finishLoading();
+
+		if(assets.manager.update()){
+			loadData();
+			init();
+		}
+	}
+
+
+	private void loadData() {
+		playerTexture = assets.manager.get("player.png", Texture.class);
+		platformTexture = assets.manager.get("platform.png", Texture.class);
+		music = assets.manager.get("music.ogg", Music.class);
 	}
 
 
@@ -35,7 +49,7 @@ public class JumpTutorial extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		music.play();
 		camera = new OrthographicCamera(480, 600);
-		player = new JumpPlayer(playerTexture);
+		player = new JumpPlayer(playerTexture, assets.manager.<Sound>get("jump.ogg", Sound.class));
 		platforms = new Array<>();
 		for(int i = 1; i < 30; i++){
 			Platform platform = new Platform((platformTexture));
@@ -43,13 +57,6 @@ public class JumpTutorial extends ApplicationAdapter {
 			platform.y = 200 * i;
 			platforms.add(platform);
 		}
-	}
-
-
-	private void loadData() {
-		playerTexture = new Texture("player.png");
-		platformTexture = new Texture("platform.png");
-		music = Gdx.audio.newMusic(Gdx.files.internal("music.ogg"));
 	}
 
 
@@ -108,10 +115,6 @@ public class JumpTutorial extends ApplicationAdapter {
 
 	@Override
 	public void dispose () {
-		batch.dispose();
-		playerTexture.dispose();
-		platformTexture.dispose();
-		music.dispose();
-		player.dispose();
+		assets.dispose();
 	}
 }
