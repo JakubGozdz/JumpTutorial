@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.Input.Keys;
+
 
 public class JumpTutorial extends ApplicationAdapter {
 
@@ -33,11 +35,9 @@ public class JumpTutorial extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		music.play();
 		camera = new OrthographicCamera(480, 600);
-
 		player = new JumpPlayer(playerTexture);
 		platforms = new Array<>();
-
-		for(int i = 1; i < 3; i++){
+		for(int i = 1; i < 30; i++){
 			Platform platform = new Platform((platformTexture));
 			platform.x = MathUtils.random(480);
 			platform.y = 200 * i;
@@ -58,6 +58,7 @@ public class JumpTutorial extends ApplicationAdapter {
 		update();
 		ScreenUtils.clear(1, 1, 1, 1);
 		batch.begin();
+		batch.setProjectionMatrix(camera.combined);
 		for(Platform platform : platforms){
 			platform.draw(batch);
 		}
@@ -66,7 +67,42 @@ public class JumpTutorial extends ApplicationAdapter {
 	}
 
 	private void update() {
+		handleInput();
+		camera.position.set(player.x + player.getWidth()/2, player.y + 200, 0);
+		camera.update();
+		player.y += player.jumpVelocity * Gdx.graphics.getDeltaTime();
+		if(player.y > 0) {
+			player.jumpVelocity += gravity;
+		} else {
+			player.y = 0;
+			player.canJump = true;
+			player.jumpVelocity = 0;
+		}
+		for(Platform platform : platforms){
+			if(isPlayerOnPlatform(platform)){
+				player.canJump = true;
+				player.jumpVelocity = 0;
+				player.y = platform.y + platform.height;
+			}
+		}
+	}
 
+
+	private boolean isPlayerOnPlatform(Platform platform) {
+		return player.jumpVelocity <= 0 && player.overlaps(platform) && !(player.y <= platform.y);
+	}
+
+
+	private void handleInput() {
+		if(Gdx.input.isKeyPressed(Keys.A)){
+			player.x -= 500 * Gdx.graphics.getDeltaTime();
+		}
+		if(Gdx.input.isKeyPressed(Keys.D)){
+			player.x += 500 * Gdx.graphics.getDeltaTime();
+		}
+		if(Gdx.input.justTouched() || Gdx.input.isKeyPressed(Keys.SPACE)){
+			player.jump();
+		}
 	}
 
 
