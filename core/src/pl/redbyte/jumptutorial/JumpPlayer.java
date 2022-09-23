@@ -36,7 +36,7 @@ public class JumpPlayer extends Rectangle {
         }
     }
 
-    public Sound getJumpSound() {
-        return jumpSound;
+    public void dispose() {
+        jumpSound.dispose();
     }
 }

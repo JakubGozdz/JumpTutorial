@@ -56,6 +56,6 @@ public class JumpTutorial extends ApplicationAdapter {
 		playerTexture.dispose();
 		platformTexture.dispose();
 		music.dispose();
-		player.getJumpSound().dispose();
+		if(player != null) player.dispose();
 	}
 }
