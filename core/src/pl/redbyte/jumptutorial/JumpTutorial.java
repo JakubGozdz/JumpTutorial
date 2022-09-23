@@ -49,7 +49,7 @@ public class JumpTutorial extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		music.play();
 		camera = new OrthographicCamera(480, 600);
-		player = new JumpPlayer(playerTexture, assets.manager.<Sound>get("jump.ogg", Sound.class));
+		player = new JumpPlayer(playerTexture, assets.manager.get("jump.ogg", Sound.class));
 		platforms = new Array<>();
 		for(int i = 1; i < 30; i++){
 			Platform platform = new Platform((platformTexture));
