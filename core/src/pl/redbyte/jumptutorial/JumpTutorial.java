@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 
@@ -25,13 +26,23 @@ public class JumpTutorial extends ApplicationAdapter {
 	public void create () {
 		loadData();
 		init();
-
 	}
 
 
 	private void init() {
 		batch = new SpriteBatch();
 		music.play();
+		camera = new OrthographicCamera(480, 600);
+
+		player = new JumpPlayer(playerTexture);
+		platforms = new Array<>();
+
+		for(int i = 1; i < 3; i++){
+			Platform platform = new Platform((playerTexture));
+			platform.x = MathUtils.random(480);
+			platform.y = 200 * i;
+			platforms.add(platform);
+		}
 	}
 
 
@@ -44,9 +55,15 @@ public class JumpTutorial extends ApplicationAdapter {
 
 	@Override
 	public void render () {
+		update();
 		ScreenUtils.clear(1, 1, 1, 1);
 		batch.begin();
+		player.draw(batch);
 		batch.end();
+	}
+
+	private void update() {
+
 	}
 
 
@@ -56,6 +73,6 @@ public class JumpTutorial extends ApplicationAdapter {
 		playerTexture.dispose();
 		platformTexture.dispose();
 		music.dispose();
-		if(player != null) player.dispose();
+		player.dispose();
 	}
 }
