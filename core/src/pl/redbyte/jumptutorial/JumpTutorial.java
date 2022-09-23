@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 public class JumpTutorial extends ApplicationAdapter {
 
-	
+
 	private Music music;
 	private Texture playerTexture, platformTexture;
 	private JumpPlayer player;
@@ -53,5 +53,9 @@ public class JumpTutorial extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		batch.dispose();
+		playerTexture.dispose();
+		platformTexture.dispose();
+		music.dispose();
+		player.getJumpSound().dispose();
 	}
 }

@@ -35,4 +35,8 @@ public class JumpPlayer extends Rectangle {
             jumpSound.play();
         }
     }
+
+    public Sound getJumpSound() {
+        return jumpSound;
+    }
 }
