@@ -38,7 +38,7 @@ public class JumpTutorial extends ApplicationAdapter {
 		platforms = new Array<>();
 
 		for(int i = 1; i < 3; i++){
-			Platform platform = new Platform((playerTexture));
+			Platform platform = new Platform((platformTexture));
 			platform.x = MathUtils.random(480);
 			platform.y = 200 * i;
 			platforms.add(platform);
@@ -58,6 +58,9 @@ public class JumpTutorial extends ApplicationAdapter {
 		update();
 		ScreenUtils.clear(1, 1, 1, 1);
 		batch.begin();
+		for(Platform platform : platforms){
+			platform.draw(batch);
+		}
 		player.draw(batch);
 		batch.end();
 	}
