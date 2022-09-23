@@ -8,6 +8,6 @@ It is a simple Doodle Jump or Icy Tower clone, made using <a href="https://libgd
 Compared to the code presented in the video, I added a dispose method for the used resources (I hope I did it correctly)
 .
 
-Later on I've created a new branch named <i>usingAssetManageer</i> based on
-tutorial: https://www.youtube.com/watch?v=DThUCHfQlKg (in Polish) and GitHub
-tutorial: https://www.youtube.com/watch?v=STJBFXskfCc (in English)
+Later on, based on tutorial: https://www.youtube.com/watch?v=DThUCHfQlKg (in Polish), and GitHub
+tutorial: https://www.youtube.com/watch?v=STJBFXskfCc (in English) I've created a new branch named <i>
+usingAssetManager</i>.
